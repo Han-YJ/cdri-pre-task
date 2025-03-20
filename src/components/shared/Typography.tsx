@@ -28,6 +28,15 @@ const colorStyles: Record<Color, string> = {
   subtitle: 'text-text-subtitle',
 };
 
+/**
+ * Typography component
+ * @param variant 폰트의 size, weight
+ * @param as h1, h2, p, span...
+ * @param bold title variant 를 제외한 typo의 bold 설정
+ * @param color primary | secondary | subtitle
+ * @param children ReactNode
+ * @param className 기타 styling
+ */
 const Typography = ({
   variant,
   color = 'primary',
