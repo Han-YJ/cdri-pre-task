@@ -3,20 +3,25 @@ import Typography from './Typography';
 
 const Header = () => {
   const location = useLocation();
-  const isActive = (path: string) => (location.pathname === path ? 'underline' : '');
+  const isActive = (path: string) =>
+    location.pathname === path ? 'pb-1 border-b-1 border-primary' : '';
 
   return (
-    <header className="w-full  ">
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between ">
-        <Typography as="h1" variant={'title1'}>
+    <header className="w-full">
+      <div className="max-w-screen-xl mx-auto h-20 flex items-center px-5">
+        <Typography as="h1" variant={'title1'} className="select-none mr-[400px]">
           CERTICOS BOOKS
         </Typography>
-        <nav>
+        <nav className="flex gap-14">
           <Link to="/" className={`${isActive('/')}`}>
-            도서검색
+            <Typography as="span" variant="body1">
+              도서검색
+            </Typography>
           </Link>
           <Link to="/save" className={`${isActive('/save')}`}>
-            내가 찜한 책
+            <Typography as="span" variant="body1">
+              내가 찜한 책
+            </Typography>
           </Link>
         </nav>
       </div>
