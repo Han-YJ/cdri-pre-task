@@ -2,33 +2,53 @@ import { JSX, ReactNode } from 'react';
 import { cn } from '@/utils/styles';
 
 type Variant = 'title1' | 'title2' | 'title3' | 'body1' | 'body2' | 'caption' | 'small';
-
+type Color = 'primary' | 'secondary' | 'subtitle';
 interface TypographyProps {
   variant: Variant;
-  as?: keyof JSX.IntrinsicElements; // "h1" | "h2" | "p" | "span" 등
+  as?: keyof JSX.IntrinsicElements; //
   bold?: boolean;
+  color?: Color;
   children: ReactNode;
   className?: string;
 }
 
-const typographyStyles: Record<Variant, string> = {
+const baseStyles = 'font-medium';
+const variantStyles: Record<Variant, string> = {
   title1: 'text-2xl text-bold',
   title2: 'text-[22px] text-bold',
   title3: 'text-lg text-bold',
   body1: 'text-xl',
   body2: 'text-sm',
-  caption: 'text-base text-gray-500',
+  caption: 'text-base',
   small: 'text-[10px]',
 };
+const colorStyles: Record<Color, string> = {
+  primary: 'text-text-primary',
+  secondary: 'text-text-secondary',
+  subtitle: 'text-text-subtitle',
+};
 
-const Typography = ({ as: Tag = 'p', variant, bold, className, children }: TypographyProps) => {
+const Typography = ({
+  variant,
+  color = 'primary',
+  as: Tag = 'p',
+  bold,
+  className,
+  children,
+}: TypographyProps) => {
   return (
-    <Tag className={cn(typographyStyles[variant], bold && 'font-bold', 'font-medium', className)}>
+    <Tag
+      className={cn(
+        baseStyles,
+        variantStyles[variant],
+        colorStyles[color],
+        bold && 'font-bold',
+        className
+      )}
+    >
       {children}
     </Tag>
   );
 };
 
 export default Typography;
-
-/* body1 예제 텍스트 */
