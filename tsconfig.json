@@ -6,5 +6,7 @@
     }
   },
   "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+  "types": ["node", "vite-plugin-svgr/client"],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+  "include": ["svg.d.ts"]
 }
