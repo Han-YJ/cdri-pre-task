@@ -1,6 +1,8 @@
 import { searchBooks } from '@/api/kakao';
-import { SearchBooksParams, SearchBooksResponse } from '@/types/search';
+import { useAtomValue } from 'jotai';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { searchParamsAtom } from '@/atoms/searchAtoms';
+import { SearchBooksResponse } from '@/types/search';
 
 /**
  * 책 검색하기
@@ -11,7 +13,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
  * @returns hasNextPage - 다음 페이지가 존재하는지 여부
  * @returns fetchNextPage - 다음 페이지 데이터를 가져오는 함수
  */
-export const useSearchBooks = (params: SearchBooksParams) => {
+export const useSearchBooks = () => {
+  const params = useAtomValue(searchParamsAtom);
   const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery({
     queryKey: ['searchBooks', params],
     initialPageParam: 1,
