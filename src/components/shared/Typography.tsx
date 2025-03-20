@@ -14,13 +14,13 @@ interface TypographyProps {
 
 const baseStyles = 'font-medium';
 const variantStyles: Record<Variant, string> = {
-  title1: 'text-2xl text-bold',
-  title2: 'text-[22px] text-bold',
-  title3: 'text-lg text-bold',
-  body1: 'text-xl',
-  body2: 'text-sm',
-  caption: 'text-base',
-  small: 'text-[10px]',
+  title1: 'text-2xl text-bold leading-6',
+  title2: 'text-[22px] text-bold leading-6',
+  title3: 'text-lg text-bold leading-[18px]',
+  body1: 'text-xl leading-[14px]',
+  body2: 'text-sm leading-[14px]',
+  caption: 'text-base leading-4',
+  small: 'text-[10px] leading-[10px]',
 };
 const colorStyles: Record<Color, string> = {
   primary: 'text-text-primary',
