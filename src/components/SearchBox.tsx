@@ -10,7 +10,7 @@ import { cn } from '@/utils/styles';
 
 const SearchBox = () => {
   const [searchParams, setSearchParams] = useAtom(searchParamsAtom);
-  const { searchHistory, addSearchQuery, removeSearchQuery } = useSearchHistory();
+  const { searchHistory, addSearchQuery } = useSearchHistory();
   const [query, setQuery] = useState(searchParams.query || '');
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -77,33 +77,8 @@ const SearchBox = () => {
               />
             </div>
 
-            {/* history 표시 */}
-            {isInputFocused && searchHistory.length > 0 && (
-              <ul
-                onMouseDown={(event) => {
-                  event.preventDefault();
-                }}
-                className="ml-12 flex flex-col gap-4 pt-4.5 pr-6"
-              >
-                {searchHistory.map((historyQuery) => (
-                  <li
-                    key={historyQuery}
-                    className="hover:text-text-primary flex cursor-pointer items-center justify-between"
-                    onClick={() => handleSelectHistory(historyQuery)}
-                  >
-                    <Typography variant="caption" color="subtitle">
-                      {historyQuery}
-                    </Typography>
-                    <CloseIcon
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeSearchQuery(historyQuery);
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
-            )}
+            {/* 검색 history */}
+            <SearchHistory isShow={isInputFocused} handleSelectHistory={handleSelectHistory} />
           </div>
 
           {/* 상세검색 button*/}
@@ -119,3 +94,36 @@ const SearchBox = () => {
 };
 
 export default SearchBox;
+
+interface SearchHistoryProps {
+  isShow: boolean;
+  handleSelectHistory: (query: string) => void;
+}
+const SearchHistory = ({ isShow, handleSelectHistory }: SearchHistoryProps) => {
+  const { searchHistory, removeSearchQuery } = useSearchHistory();
+
+  if (!isShow) return null;
+  if (searchHistory.length === 0) return null;
+
+  return (
+    <ul className="ml-12 flex flex-col gap-4 pt-4.5 pr-6" onMouseDown={(e) => e.preventDefault()}>
+      {searchHistory.map((historyQuery) => (
+        <li
+          key={historyQuery}
+          className="hover:text-text-primary flex cursor-pointer items-center justify-between"
+          onClick={() => handleSelectHistory(historyQuery)}
+        >
+          <Typography variant="caption" color="subtitle">
+            {historyQuery}
+          </Typography>
+          <CloseIcon
+            onClick={(e) => {
+              e.stopPropagation();
+              removeSearchQuery(historyQuery);
+            }}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};
