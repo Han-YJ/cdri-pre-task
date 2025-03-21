@@ -12,7 +12,7 @@ interface ButtonProps {
   className?: string;
 }
 
-const baseStyles = 'flex justify-center items-center rounded-lg h-12';
+const baseStyles = 'flex justify-center items-center rounded-lg h-12 shrink-0';
 const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-white',
   secondary: 'bg-lightGray text-text-secondary',
@@ -20,7 +20,7 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 const sizeStyles: Record<ButtonSize, string> = {
   lg: 'w-[240px]',
-  md: 'px-5',
+  md: 'w-[115px]',
   sm: 'w-auto px-[10px] h-[35px]',
 };
 
