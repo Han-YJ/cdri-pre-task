@@ -24,6 +24,15 @@ const sizeStyles: Record<ButtonSize, string> = {
   sm: 'w-auto px-[10px] h-[35px]',
 };
 
+/**
+ * Button component
+ * @param variant primary | secondary | outline
+ * @param size lg | md | sm
+ * @param disabled
+ * @param onClick
+ * @param children
+ * @param className 기타 styling
+ */
 export const Button = ({
   variant = 'primary',
   size = 'md',
