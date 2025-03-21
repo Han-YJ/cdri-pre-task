@@ -1,41 +1,50 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useAtom } from 'jotai';
 import { Button } from './shared/Button';
+import { searchParamsAtom } from '@/atoms/searchAtoms';
+import Modal from './shared/Modal';
 import Typography from './shared/Typography';
+import SearchDetailContent from './SearchDetailContent';
 import CloseIcon from '@/icons/close.svg?react';
 import SearchIcon from '@/icons/search.svg?react';
-import { useSearchHistory } from '@/hooks/useSearchHistory';
-import { searchParamsAtom } from '@/atoms/searchAtoms';
+import useModal from '@/hooks/useModal';
+import useSearchHistory from '@/hooks/useSearchHistory';
 import { cn } from '@/utils/styles';
 
 const SearchBox = () => {
-  const [searchParams, setSearchParams] = useAtom(searchParamsAtom);
+  const detailSearchRef = useRef<HTMLDivElement>(null);
+
   const { searchHistory, addSearchQuery } = useSearchHistory();
+  const { isOpen, openModal, closeModal } = useModal();
+
+  const [searchParams, setSearchParams] = useAtom(searchParamsAtom);
   const [query, setQuery] = useState(searchParams.query || '');
   const [isInputFocused, setIsInputFocused] = useState(false);
 
+  // 검색
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
   };
-
   const handleSearchQuery = (query: string) => {
-    setSearchParams({ ...searchParams, query });
+    setSearchParams({ ...searchParams, target: undefined, query }); // 전체 검색 시 상세검색 초기화
     addSearchQuery(query);
     setIsInputFocused(false);
   };
-
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (query.length === 0) return;
     if (event.key === 'Enter') handleSearchQuery(query);
   };
 
   //상세검색
-  //const handleDetailSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-  //  e.preventDefault();
-  //  console.log('상세검색');
-  //};
+  const handleDetailSearch = (): void => {
+    setQuery(''); // 상세검색 시 검색어 초기화
+    openModal('detailSearch');
+  };
+  const handleCloseDetailSearchModal = () => {
+    closeModal('detailSearch');
+  };
 
-  // history
+  // 검색 history
   const handleSelectHistory = (query: string) => {
     setQuery(query);
     handleSearchQuery(query);
@@ -81,14 +90,25 @@ const SearchBox = () => {
             <SearchHistory isShow={isInputFocused} handleSelectHistory={handleSelectHistory} />
           </div>
 
-          {/* 상세검색 button*/}
-          <div className="flex h-[50px] items-center justify-center">
-            <Button variant="outline" size="sm">
+          {/* 상세검색 btn*/}
+          <div ref={detailSearchRef} className="relative flex h-[50px] items-center justify-center">
+            <Button variant="outline" size="sm" onClick={handleDetailSearch}>
               상세검색
             </Button>
           </div>
         </div>
       </div>
+
+      {/* 상세검색 모달 */}
+      <Modal
+        isOpen={isOpen('detailSearch')}
+        onClose={handleCloseDetailSearchModal}
+        anchorRef={detailSearchRef}
+        position="bottom"
+        allowBackgroundInteraction
+      >
+        <SearchDetailContent onClose={handleCloseDetailSearchModal} />
+      </Modal>
     </div>
   );
 };
