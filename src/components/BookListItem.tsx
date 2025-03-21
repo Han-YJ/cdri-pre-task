@@ -16,11 +16,11 @@ const BookListItem = ({ data }: BookListItemProps) => {
 
   return (
     <div className={cn('flex border-b border-b-[#D2D6DA]', isOpen ? 'h-auto py-6' : 'h-[100px]')}>
-      <img
-        src={thumbnail}
-        alt={`${title} img`}
-        className={cn('shrink-0 object-contain', isOpen ? 'h-[280px] w-[210px]' : 'w-[48px]')}
-      />
+      <div className={cn(isOpen ? 'h-[280px] w-[210px]' : 'w-[48px]', 'bg-white')}>
+        {thumbnail.length > 0 && (
+          <img src={thumbnail} alt={`${title} img`} className={cn('shrink-0 object-contain')} />
+        )}
+      </div>
 
       <div
         className={cn(
@@ -37,6 +37,7 @@ const BookListItem = ({ data }: BookListItemProps) => {
 
 export default BookListItem;
 
+/* InfoHeader - 리스트 기본으로 보이는 부분 */
 type InfoHeaderProps = Partial<BookListItemProps['data']> & {
   handleToggleDetail: () => void;
   isOpen?: boolean;
@@ -79,6 +80,7 @@ const InfoHeader = ({
   );
 };
 
+/* InfoDetails - 상세보기시 보이는 부분 */
 type InfoDetailsProps = { isOpen: boolean } & BookListItemProps['data'];
 const InfoDetails = ({ contents, price, sale_price, isOpen }: InfoDetailsProps) => {
   if (!isOpen) return null;
