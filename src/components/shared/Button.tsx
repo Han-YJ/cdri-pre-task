@@ -1,9 +1,9 @@
 import { cn } from '@/utils/styles';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline';
-type ButtonSize = 'lg' | 'md' | 'sm';
+type ButtonSize = 'lg' | 'md' | 'sm' | 'full';
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   disabled?: boolean;
@@ -12,7 +12,7 @@ interface ButtonProps {
   className?: string;
 }
 
-const baseStyles = 'flex justify-center items-center rounded-lg h-12 shrink-0';
+const baseStyles = 'flex justify-center items-center rounded-lg h-12 shrink-0 cursor-pointer';
 const variantStyles: Record<ButtonVariant, string> = {
   primary: 'bg-primary text-white',
   secondary: 'bg-lightGray text-text-secondary',
@@ -22,6 +22,7 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: 'w-[240px]',
   md: 'w-[115px]',
   sm: 'w-auto px-[10px] h-[35px]',
+  full: 'w-full',
 };
 
 /**
@@ -37,9 +38,9 @@ export const Button = ({
   variant = 'primary',
   size = 'md',
   disabled = false,
-  onClick,
   children,
   className,
+  ...props
 }: ButtonProps) => {
   return (
     <button
@@ -51,7 +52,7 @@ export const Button = ({
         className
       )}
       disabled={disabled}
-      onClick={onClick}
+      {...props}
     >
       {children}
     </button>
