@@ -1,7 +1,7 @@
 import { searchHistoryAtom } from '@/atoms/searchAtoms';
 import { useAtom } from 'jotai';
 
-export const useSearchHistory = () => {
+const useSearchHistory = () => {
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
 
   // 검색어 추가
@@ -27,3 +27,5 @@ export const useSearchHistory = () => {
     removeSearchQuery,
   };
 };
+
+export default useSearchHistory;
