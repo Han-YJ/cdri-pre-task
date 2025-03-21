@@ -26,7 +26,7 @@ export const useSearchBooks = () => {
   });
 
   return {
-    data: data?.pages.map((meta) => meta.documents).flat(),
+    data: data?.pages.map((meta) => meta.documents).flat() || [],
     metaData: data?.pages[0].meta,
     isLoading,
     hasNextPage,
