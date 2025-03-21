@@ -12,7 +12,7 @@ const ListTitle = ({ title, totCnt, className }: ListTitleProps) => {
       <Typography variant="caption" className="leading-6">
         {title}
       </Typography>
-      {totCnt && (
+      {totCnt !== undefined && (
         <Typography variant="caption" className="leading-6">
           총 <span className="text-primary">{totCnt.toLocaleString()}</span>건
         </Typography>
