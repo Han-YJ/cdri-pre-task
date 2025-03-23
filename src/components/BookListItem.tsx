@@ -9,10 +9,14 @@ type BookListItemProps = {
   data: SearchBooksResponse['documents'][0];
 };
 const BookListItem = ({ data }: BookListItemProps) => {
-  const { title, thumbnail } = data;
+  const { title, thumbnail, url } = data;
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDetail = () => setIsOpen((prev) => !prev);
+
+  const handleOpenUrl = () => {
+    url && window.open(url, '_blank');
+  };
 
   return (
     <div className={cn('border-b-border-gray flex border-b', isOpen ? 'h-auto py-6' : 'h-[100px]')}>
@@ -33,8 +37,13 @@ const BookListItem = ({ data }: BookListItemProps) => {
           isOpen ? 'justify-start pl-8' : 'justify-center pl-12'
         )}
       >
-        <InfoHeader isOpen={isOpen} handleToggleDetail={toggleDetail} {...data} />
-        <InfoDetails isOpen={isOpen} {...data} />
+        <InfoHeader
+          isOpen={isOpen}
+          handleToggleDetail={toggleDetail}
+          handleOpenUrl={handleOpenUrl}
+          {...data}
+        />
+        <InfoDetails isOpen={isOpen} handleOpenUrl={handleOpenUrl} {...data} />
       </div>
     </div>
   );
@@ -45,6 +54,7 @@ export default BookListItem;
 /* InfoHeader - 리스트 기본으로 보이는 부분 */
 type InfoHeaderProps = Partial<BookListItemProps['data']> & {
   handleToggleDetail: () => void;
+  handleOpenUrl: () => void;
   isOpen?: boolean;
 };
 const InfoHeader = ({
@@ -54,6 +64,7 @@ const InfoHeader = ({
   sale_price,
   isOpen,
   handleToggleDetail,
+  handleOpenUrl,
 }: InfoHeaderProps) => {
   const displayPrice = (sale_price ?? price ?? '').toLocaleString() + '원';
 
@@ -76,7 +87,9 @@ const InfoHeader = ({
 
       {/** 버튼 영역 */}
       <div className={cn('shirink-0 flex items-center gap-2')}>
-        <Button className={cn(isOpen && 'hidden')}>구매하기</Button>
+        <Button className={cn(isOpen && 'hidden')} onClick={handleOpenUrl}>
+          구매하기
+        </Button>
         <Button variant="secondary" onClick={handleToggleDetail}>
           상세보기 <ArrowIcon className={cn('mx-1', isOpen && 'rotate-180')} />
         </Button>
@@ -86,8 +99,9 @@ const InfoHeader = ({
 };
 
 /* InfoDetails - 상세보기시 보이는 부분 */
-type InfoDetailsProps = { isOpen: boolean } & BookListItemProps['data'];
-const InfoDetails = ({ contents, price, sale_price, isOpen }: InfoDetailsProps) => {
+
+type InfoDetailsProps = { isOpen: boolean; handleOpenUrl: () => void } & BookListItemProps['data'];
+const InfoDetails = ({ contents, price, sale_price, isOpen, handleOpenUrl }: InfoDetailsProps) => {
   if (!isOpen) return null;
 
   return (
@@ -129,7 +143,7 @@ const InfoDetails = ({ contents, price, sale_price, isOpen }: InfoDetailsProps) 
           )}
         </div>
 
-        <Button variant="primary" size="lg">
+        <Button variant="primary" size="lg" onClick={handleOpenUrl}>
           구매하기
         </Button>
       </div>
