@@ -1,34 +1,46 @@
 import { useState } from 'react';
 import { SearchBooksResponse } from '@/types/search';
-import Typography from './shared/Typography';
 import { cn } from '@/utils/styles';
 import { Button } from './shared/Button';
+import Typography from './shared/Typography';
 import ArrowIcon from '@/assets/icons/arrow.svg?react';
+import BookLikeIcon from './BookLikeIcon';
 
 type BookListItemProps = {
   data: SearchBooksResponse['documents'][0];
 };
+
+const LIKE_ICON_SIZE = 16;
+const LIKE_DETAIL_ICON_SIZE = 24;
+
 const BookListItem = ({ data }: BookListItemProps) => {
   const { title, thumbnail, url } = data;
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDetail = () => setIsOpen((prev) => !prev);
-
   const handleOpenUrl = () => {
     url && window.open(url, '_blank');
   };
+
+  const iconSize = isOpen ? LIKE_DETAIL_ICON_SIZE : LIKE_ICON_SIZE;
 
   return (
     <div className={cn('border-b-border-gray flex border-b', isOpen ? 'h-auto py-6' : 'h-[100px]')}>
       <div
         className={cn(
           isOpen ? 'w-[210px]' : 'w-[48px]',
-          'flex shrink-0 items-center justify-center bg-white'
+          'relative flex shrink-0 items-center justify-center bg-white select-none'
         )}
       >
         {thumbnail.length > 0 && (
           <img src={thumbnail} alt={`${title} img`} className={cn('')} width={'100%'} />
         )}
+
+        <BookLikeIcon
+          size={iconSize}
+          bookData={data}
+          className={cn(isOpen ? 'top-1 right-1' : 'top-4 right-0', 'absolute cursor-pointer')}
+        />
       </div>
 
       <div
