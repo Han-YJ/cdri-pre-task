@@ -1,5 +1,5 @@
 import { SearchBooksParams, SearchBooksResponse } from '@/types/search';
-import { kakaoApi } from './axiosInstance';
+import kakaoApi from './kakaoApi';
 
 /**
  * 책 검색하기

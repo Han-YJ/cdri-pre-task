@@ -1,9 +1,15 @@
 import axios from 'axios';
 
-/** kakao api */
-export const kakaoApi = axios.create({
-  baseURL: 'https://dapi.kakao.com/v3',
+const defaultInstance = axios.create({
+  timeout: 5000,
   headers: {
-    Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
+    'Content-Type': 'application/json',
   },
 });
+
+// 공통 인터셉터
+defaultInstance.interceptors.request.use((config) => {
+  return config;
+});
+
+export default defaultInstance;
