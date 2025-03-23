@@ -17,6 +17,10 @@ npm install
 npm run dev
 ```
 
+## 🟢 Live Demo
+
+[보러가기](https://cdri-pre-task.vercel.app/)
+
 ## 🗂️ 폴더 구조
 
 | 폴더              | 설명                                            |
