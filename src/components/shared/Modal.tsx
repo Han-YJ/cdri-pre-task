@@ -11,6 +11,15 @@ interface ModalProps {
   allowBackgroundInteraction?: boolean; // 기존 페이지 사용 허용 여부 (& overlay)
 }
 
+/**
+ * Modal component
+ * @param isOpen
+ * @param onClose
+ * @param children
+ * @param anchorRef 모달의 위치 설정할 ref (optional)
+ * @param position 모달의 위치 설정 ('top', 'bottom', 'left', 'right', 'center')
+ * @param allowBackgroundInteraction 배경 클릭 시 모달이 닫히지 않도록 설정하는 옵션 (기본값: false)
+ */
 const Modal = ({
   isOpen,
   onClose,
