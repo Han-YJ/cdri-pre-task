@@ -4,10 +4,17 @@ import ListItem from './ListItem';
 type ListProps<T> = {
   data: T[];
   renderItem: (item: T, index: number) => React.ReactNode;
-  className?: string; // list container styling
-  onReachEnd?: () => void; // 무한 스크롤 or 리스트 마지막 이벤트가 필요한 경우만 전달
+  className?: string;
+  onReachEnd?: () => void;
 };
 
+/**
+ * List component
+ * @param data
+ * @param renderItem
+ * @param className 리스트 컨테이너 styling
+ * @param onReachEnd 리스트의 마지막에 도달했을 때 실행할 함수 (무한 스크롤 등)
+ */
 const List = <T extends {}>({ data, renderItem, className, onReachEnd }: ListProps<T>) => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
