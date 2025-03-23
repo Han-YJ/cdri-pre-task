@@ -12,7 +12,7 @@ type Meta = {
   pageable_count: number; //	중복된 문서를 제외하고, 처음부터 요청 페이지까지의 노출 가능 문서 수
   is_end: boolean; // 현재 페이지가 마지막 페이지인지 여부, 값이 false면 page를 증가시켜 다음 페이지를 요청할 수 있음
 };
-type Document = {
+export type Document = {
   title: string; //도서 제목
   contents: string; //도서 소개
   url: string; //도서 상세 URL
