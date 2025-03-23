@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router';
-import Search from './pages/Search';
-import Save from './pages/Save';
-import Layout from './components/shared/DefaultLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Layout from './components/shared/DefaultLayout';
+import Search from './pages/Search';
+import Like from './pages/Like';
 
 const queryClient = new QueryClient();
 
@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Search />} />
-          <Route path="/save" element={<Save />} />
+          <Route path="/like" element={<Like />} />
         </Route>
       </Routes>
     </QueryClientProvider>
