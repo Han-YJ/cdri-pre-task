@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import ArrowIcon from '@/icons/arrow.svg?react';
+import ArrowIcon from '@/assets/icons/arrow.svg?react';
 import Typography from './Typography';
 
 export type Option = {

@@ -3,7 +3,7 @@ import { SearchBooksResponse } from '@/types/search';
 import Typography from './shared/Typography';
 import { cn } from '@/utils/styles';
 import { Button } from './shared/Button';
-import ArrowIcon from '@/icons/arrow.svg?react';
+import ArrowIcon from '@/assets/icons/arrow.svg?react';
 
 type BookListItemProps = {
   data: SearchBooksResponse['documents'][0];

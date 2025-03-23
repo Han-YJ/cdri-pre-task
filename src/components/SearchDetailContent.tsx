@@ -1,6 +1,6 @@
 import { Button } from './shared/Button';
 import Typography from './shared/Typography';
-import CloseIcon from '@/icons/close.svg?react';
+import CloseIcon from '@/assets/icons/close.svg?react';
 
 interface SearchDetailContentProps {
   onClose: () => void;
