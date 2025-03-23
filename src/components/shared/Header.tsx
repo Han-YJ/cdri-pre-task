@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router';
 import Typography from './Typography';
+import { cn } from '@/utils/styles';
 
 const Header = () => {
   const location = useLocation();
@@ -13,12 +14,12 @@ const Header = () => {
           CERTICOS BOOKS
         </Typography>
         <nav className="flex gap-14">
-          <Link to="/" className={`${isActive('/')}`}>
+          <Link to="/" className={cn(isActive('/'))}>
             <Typography as="span" variant="body1">
               도서검색
             </Typography>
           </Link>
-          <Link to="/like" className={`${isActive('/like')}`}>
+          <Link to="/like" className={cn(isActive('/like'))}>
             <Typography as="span" variant="body1">
               내가 찜한 책
             </Typography>
