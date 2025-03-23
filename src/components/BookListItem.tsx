@@ -16,9 +16,14 @@ const BookListItem = ({ data }: BookListItemProps) => {
 
   return (
     <div className={cn('border-b-border-gray flex border-b', isOpen ? 'h-auto py-6' : 'h-[100px]')}>
-      <div className={cn(isOpen ? 'h-[280px] w-[210px]' : 'w-[48px]', 'bg-white')}>
+      <div
+        className={cn(
+          isOpen ? 'w-[210px]' : 'w-[48px]',
+          'flex shrink-0 items-center justify-center bg-white'
+        )}
+      >
         {thumbnail.length > 0 && (
-          <img src={thumbnail} alt={`${title} img`} className={cn('shrink-0 object-contain')} />
+          <img src={thumbnail} alt={`${title} img`} className={cn('')} width={'100%'} />
         )}
       </div>
 
