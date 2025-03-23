@@ -1,5 +1,5 @@
 import { cn } from '@/utils/styles';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ModalProps {
@@ -8,7 +8,7 @@ interface ModalProps {
   children: React.ReactNode;
   anchorRef?: React.RefObject<HTMLElement | null>;
   position?: 'top' | 'bottom' | 'left' | 'right' | 'center';
-  allowBackgroundInteraction?: boolean; // 기존 페이지 사용 허용 여부
+  allowBackgroundInteraction?: boolean; // 기존 페이지 사용 허용 여부 (& overlay)
 }
 
 const Modal = ({
@@ -22,54 +22,55 @@ const Modal = ({
   const modalRef = useRef<HTMLDivElement>(null);
   const [styles, setStyles] = useState<React.CSSProperties>({});
 
-  useEffect(() => {
-    if (isOpen && anchorRef?.current) {
+  const getModalPosition = (anchorRect: DOMRect, modalElement: HTMLElement) => {
+    const baseStyles: React.CSSProperties = { position: 'absolute' };
+
+    switch (position) {
+      case 'bottom':
+        return {
+          ...baseStyles,
+          top: anchorRect.bottom + 8,
+          left: anchorRect.left + anchorRect.width / 2 - modalElement.offsetWidth / 2,
+        };
+      case 'top':
+        return {
+          ...baseStyles,
+          top: anchorRect.top - modalElement.offsetHeight - 8,
+          left: anchorRect.left,
+        };
+      case 'left':
+        return {
+          ...baseStyles,
+          top: anchorRect.top,
+          left: anchorRect.left - modalElement.offsetWidth - 8,
+        };
+      case 'right':
+        return { ...baseStyles, top: anchorRect.top, left: anchorRect.right + 8 };
+      case 'center':
+      default:
+        return {
+          ...baseStyles,
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        };
+    }
+  };
+
+  const modalStyles = useMemo(() => {
+    if (isOpen && anchorRef?.current && modalRef.current) {
       const anchorRect = anchorRef.current.getBoundingClientRect();
       const modalElement = modalRef.current;
-
-      if (modalElement) {
-        let newStyles: React.CSSProperties = { position: 'absolute' };
-
-        switch (position) {
-          case 'bottom':
-            newStyles = {
-              ...newStyles,
-              top: anchorRect.bottom + 8,
-              left: anchorRect.left + anchorRect.width / 2 - modalElement.offsetWidth / 2, // 부모의 가로 중앙에 맞추기
-            };
-            break;
-          case 'top':
-            newStyles = {
-              ...newStyles,
-              top: anchorRect.top - modalElement.offsetHeight - 8,
-              left: anchorRect.left,
-            };
-            break;
-          case 'left':
-            newStyles = {
-              ...newStyles,
-              top: anchorRect.top,
-              left: anchorRect.left - modalElement.offsetWidth - 8,
-            };
-            break;
-          case 'right':
-            newStyles = { ...newStyles, top: anchorRect.top, left: anchorRect.right + 8 };
-            break;
-          case 'center':
-          default:
-            newStyles = {
-              ...newStyles,
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            };
-            break;
-        }
-
-        setStyles(newStyles);
-      }
+      return getModalPosition(anchorRect, modalElement);
     }
+    return {};
   }, [isOpen, anchorRef, position]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setStyles(modalStyles);
+    }
+  }, [modalStyles, isOpen]);
 
   if (!isOpen) return null;
 
