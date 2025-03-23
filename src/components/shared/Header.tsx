@@ -8,8 +8,8 @@ const Header = () => {
 
   return (
     <header className="w-full">
-      <div className="max-w-screen-xl mx-auto h-20 flex items-center px-5">
-        <Typography as="h1" variant={'title1'} className="select-none mr-[400px]">
+      <div className="mx-auto flex h-20 max-w-screen-xl items-center px-5">
+        <Typography as="h1" variant={'title1'} className="mr-[400px] select-none">
           CERTICOS BOOKS
         </Typography>
         <nav className="flex gap-14">
@@ -18,7 +18,7 @@ const Header = () => {
               도서검색
             </Typography>
           </Link>
-          <Link to="/save" className={`${isActive('/save')}`}>
+          <Link to="/like" className={`${isActive('/like')}`}>
             <Typography as="span" variant="body1">
               내가 찜한 책
             </Typography>
