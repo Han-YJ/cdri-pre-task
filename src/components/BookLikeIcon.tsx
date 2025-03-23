@@ -8,6 +8,14 @@ interface BookLikeIcon {
   bookData: Book;
   className?: string;
 }
+
+/**
+ * BookLikeIcon component
+ *
+ * @param size 아이콘의 크기
+ * @param bookData 찜하기 여부를 확인할 책 데이터 (ISBN 필수)
+ * @param className 아이콘에 추가할 스타일링 클래스
+ */
 const BookLikeIcon = ({ size, bookData, className }: BookLikeIcon) => {
   const { addLikedBooks, removeLikedBooks, checkIsLikedBook } = useLikedBooks();
 
