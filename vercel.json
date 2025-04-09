@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/storybook",
-      "destination": "/storybook-static/index.html"
+      "destination": "/storybook/index.html"
     },
     {
       "source": "/storybook/(.*)",
-      "destination": "/storybook-static/$1"
+      "destination": "/storybook/$1"
     }
   ]
 }

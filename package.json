@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && build-storybook && npm run copy-storybook && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "copy-storybook": "rm -rf dist/storybook && cp -r storybook-static dist/storybook"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.14",
