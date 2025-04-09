@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build --output-dir storybook-static --base /storybook",
+    "build-storybook": "storybook build --output-dir storybook-static",
     "copy-storybook": "mkdir -p dist && rm -rf dist/storybook && cp -r storybook-static dist/storybook"
   },
   "dependencies": {
